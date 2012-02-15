@@ -106,7 +106,7 @@ int main(int argc, char * argv[])
 		return EXIT_FAILURE;
 	}
 
-	fd_out = open(argv[2], O_WRONLY | O_CREAT);
+	fd_out = open(argv[2], O_WRONLY|O_CREAT, 0666);
 	if(fd_out < 0) {
 		perror("Open output file:");
 		return EXIT_FAILURE;
