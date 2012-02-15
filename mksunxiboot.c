@@ -67,14 +67,14 @@ int gen_check_sum( void *boot_buf )
 	buf = (u32 *)boot_buf;
 	head_p->check_sum = STAMP_VALUE;              // fill stamp
 	loop = length >> 2;
-    /* calculate the sum */
-    for( i = 0, sum = 0;  i < loop;  i++ )
-    	sum += buf[i];
+	/* calculate the sum */
+	for( i = 0, sum = 0;  i < loop;  i++ )
+		sum += buf[i];
 
-    /* write back check sum */
-    head_p->check_sum = sum;
+	/* write back check sum */
+	head_p->check_sum = sum;
 
-    return 0;
+	return 0;
 }
 
 #define ALIGN(x,a)      __ALIGN_MASK((x),(typeof(x))(a)-1)
