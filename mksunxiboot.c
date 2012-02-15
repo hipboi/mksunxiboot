@@ -1,3 +1,26 @@
+/*
+ * (C) Copyright 2007-2011
+ * Allwinner Technology Co., Ltd. <www.allwinnertech.com>
+ * Tom Cubie <tangliang@allwinnertech.com>
+ *
+ * a simple tool to generate bootable image for sunxi platform.
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License as
+ * published by the Free Software Foundation; either version 2 of
+ * the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston,
+ * MA 02111-1307 USA
+ */
+
 #include <fcntl.h>
 #include <stdio.h>
 #include <unistd.h>
@@ -7,10 +30,10 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 
-/* boot head definition from sun4i boot code */
 typedef unsigned char u8;
 typedef unsigned int u32;
 
+/* boot head definition from sun4i boot code */
 typedef struct boot_file_head
 {
 	u32  jump_instruction;   // one intruction jumping to real code
@@ -44,7 +67,7 @@ int gen_check_sum( void *boot_buf )
 	buf = (u32 *)boot_buf;
 	head_p->check_sum = STAMP_VALUE;              // fill stamp
 	loop = length >> 2;
-    /* 计算当前文件内容的“校验和”*/
+    /* calculate the sum */
     for( i = 0, sum = 0;  i < loop;  i++ )
     	sum += buf[i];
 
