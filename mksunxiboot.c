@@ -91,7 +91,7 @@ int main(int argc, char * argv[])
 {
 	int fd_in, fd_out;
 	struct boot_img img;
-	int file_size, load_size;
+	unsigned file_size, load_size;
 	int count;
 
 	if(argc < 2) {
