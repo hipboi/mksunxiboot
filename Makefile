@@ -1,8 +1,10 @@
 # Makefile for mksunxiboot
+CC = gcc
+CFLAGS = -Wall -Wextra -O2
 
-all: mksunxiboot
+PROG = mksunxiboot
 
-mksunxiboot:
-	cc -o mksunxiboot mksunxiboot.c
+all: $(PROG)
+
 clean:
-	rm -rf *.o mksunxiboot
+	rm -rf *.o $(PROG)
