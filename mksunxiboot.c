@@ -67,14 +67,14 @@ int gen_check_sum( void *boot_buf )
 	buf = (u32 *)boot_buf;
 	head_p->check_sum = STAMP_VALUE;              // fill stamp
 	loop = length >> 2;
-    /* calculate the sum */
-    for( i = 0, sum = 0;  i < loop;  i++ )
-    	sum += buf[i];
+	/* calculate the sum */
+	for( i = 0, sum = 0;  i < loop;  i++ )
+		sum += buf[i];
 
-    /* write back check sum */
-    head_p->check_sum = sum;
+	/* write back check sum */
+	head_p->check_sum = sum;
 
-    return 0;
+	return 0;
 }
 
 #define ALIGN(x,a)      __ALIGN_MASK((x),(typeof(x))(a)-1)
@@ -91,7 +91,7 @@ int main(int argc, char * argv[])
 {
 	int fd_in, fd_out;
 	struct boot_img img;
-	int file_size, load_size;
+	unsigned file_size, load_size;
 	int count;
 
 	if(argc < 2) {
@@ -106,7 +106,7 @@ int main(int argc, char * argv[])
 		return EXIT_FAILURE;
 	}
 
-	fd_out = open(argv[2], O_WRONLY | O_CREAT);
+	fd_out = open(argv[2], O_WRONLY|O_CREAT, 0666);
 	if(fd_out < 0) {
 		perror("Open output file:");
 		return EXIT_FAILURE;
