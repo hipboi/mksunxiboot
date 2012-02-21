@@ -82,9 +82,11 @@ int gen_check_sum( void *boot_buf )
 
 #define SUN4I_SRAM_SIZE (24 * 1024)
 #define SRAM_LOAD_MAX_SIZE (SUN4I_SRAM_SIZE - sizeof(boot_file_head_t))
+#define BLOCK_SIZE 512
 struct boot_img {
 	boot_file_head_t header;
 	char code[SRAM_LOAD_MAX_SIZE];
+	char pad[BLOCK_SIZE];
 };
 
 int main(int argc, char * argv[])
@@ -112,6 +114,8 @@ int main(int argc, char * argv[])
 		return EXIT_FAILURE;
 	}
 
+	memset((void *)img.pad, 0, BLOCK_SIZE);
+
 	/* get input file size */
 	file_size = lseek(fd_in, 0, SEEK_END);
 	printf("File size: 0x%x \n", file_size);
@@ -136,7 +140,7 @@ int main(int argc, char * argv[])
 				& 0x00FFFFFF
 			);
 	memcpy(img.header.magic, BOOT0_MAGIC, 8);    /* no '0' termination */
-	img.header.length = load_size + sizeof(boot_file_head_t);
+	img.header.length = ALIGN(load_size + sizeof(boot_file_head_t), BLOCK_SIZE);
 	gen_check_sum((void *)&img);
 
 	count = write(fd_out, (void *)&img, img.header.length);
